@@ -1,167 +1,269 @@
-# WGBS and Epigenetic Aging Clock Benchmarking
-# 📌 Overview
+# 🧬 Epigenetics Analysis Pipeline & Aging Clock Benchmarking
 
-This repository combines two powerful epigenetics workflows:
+![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
+![Galaxy](https://img.shields.io/badge/Galaxy-Workflow-orange.svg)
+![Bioinformatics](https://img.shields.io/badge/Field-Bioinformatics-green.svg)
+![Status](https://img.shields.io/badge/Status-Complete-success.svg)
+![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)
 
-🔹 WGBS DNA Methylation Analysis (Galaxy)
-🔹 Epigenetic Aging Clock Benchmarking (Python + Biolearn)
+---
 
-Together, they provide a full-stack epigenetics pipeline from raw sequencing data → biological insights → aging prediction models.
+# 📌 Project Overview
+
+This repository presents two integrated epigenetics analyses:
+
+## 🔹 1. WGBS DNA Methylation Analysis (Galaxy Workflow)
+A complete pipeline for processing Whole Genome Bisulfite Sequencing (WGBS) data.
+
+## 🔹 2. Epigenetic Aging Clock Benchmarking (Python + Biolearn)
+A computational benchmarking framework comparing DNA methylation–based aging models.
+
+---
+
+# 🎯 Objectives
+
+- Process raw WGBS sequencing data
+- Extract methylation patterns
+- Identify Differentially Methylated Regions (DMRs)
+- Benchmark epigenetic aging clocks
+- Evaluate prediction accuracy
+- Visualize biological aging patterns
+
+---
 
 # 🧪 Part 1: WGBS DNA Methylation Analysis (Galaxy)
-# 🔬 Description
 
-A complete Whole Genome Bisulfite Sequencing (WGBS) workflow implemented in Galaxy, based on the GTN methylation tutorial.
+## 🔬 Workflow Overview
 
-# 📍 Reference Genome: hg38
-# 📄 Study: Lin et al., 2015
+FASTQ → QC → Alignment → Bias Check → Extraction → Visualization → DMR Detection
 
-# ⚙️ Pipeline Workflow
-🧰 Tools Used
-Tool	Purpose
-🔍 Falco	Quality Control
-🧬 bwameth	Bisulfite-aware Alignment
-📊 MethylDackel	Bias + Extraction
-📈 computeMatrix / plotProfile	Visualization
-🧪 Metilene	DMR Detection
-# 📂 Dataset
-Normal breast (NB)
-Fibroadenoma (BT089)
-Carcinomas (BT126, BT198)
-Cell line (MCF7)
+---
 
-# 📥 Source: Zenodo (Record 557099)
+## 📁 Dataset Information
 
-# 🚀 Key Steps & Insights
-1️⃣ Quality Control
-High T content & low C content
-✔ Expected due to bisulfite conversion
-2️⃣ Alignment
-Uses bwameth
-✔ Handles C → T conversion
-❌ Standard aligners fail
-3️⃣ Methylation Bias
-CpG methylation ~70–75%
-Slight bias at read ends
-✔ Overall stable
-4️⃣ Visualization Results
+| Sample | Description |
+|--------|------------|
+| NB | Normal breast |
+| BT089 | Fibroadenoma |
+| BT126, BT198 | Carcinomas |
+| MCF7 | Cell line |
 
-# 📉 Key Finding:
+Reference Genome: hg38  
+Source: Zenodo (Record 557099)
 
-Methylation drops near TSS
-Suggests promoter hypomethylation
+---
 
-📊 Multi-sample trends:
+# ⚙️ Pipeline Steps
 
-MCF7 → highest methylation
-Normal samples → lowest
-Tumor samples → intermediate
-5️⃣ DMR Detection
-Identifies differentially methylated regions
-Outputs:
-Distribution plots
-CpG density
-Statistical significance
-# 🧠 Key Concepts
-Concept	Explanation
-🧪 Bisulfite Conversion	C → T (unmethylated)
-🧬 CpG Islands	Promoter regions
-📊 DMR	Differential methylation
-⚠️ Bias	Read-end artifacts
-🧠 Part 2: Epigenetic Aging Clock Benchmarking
-# 📊 Overview
+## 1. Data Upload
+Upload FASTQ files into Galaxy using URL or shared data libraries.
 
-Benchmarks 8 DNA methylation aging clocks using Biolearn across two datasets.
+---
 
-# 🎯 Goals:
-Compare clock agreement
-Measure biological age deviation
-Evaluate prediction accuracy
-# 📁 Datasets
-Dataset	Samples	CpGs	Age Range
-GSE120307	34	485K	19–54
-GSE41169	95	485K	18–65
+## 2. Quality Control (Falco)
 
-✔ Complete chronological age data available
+- High T content and low C content observed
+- Due to bisulfite conversion (C → T)
+- QC may show "fail" but this is expected
 
-# ⏳ Aging Clocks
-Clock	Type
-Horvath	First-gen
-Hannum	First-gen
-SkinBloodClock	First-gen
-PhenoAge	Second-gen
-GrimAge	Second-gen
-DunedinPACE	Pace-of-aging
-PCHorvath1	PCA-based
-PCGrimAge	PCA-based
+---
+
+## 3. Alignment (bwameth)
+
+- Handles bisulfite conversion
+- Standard aligners cannot handle C→T changes
+- Output: BAM file
+
+---
+
+## 4. Methylation Bias (MethylDackel)
+
+- CpG methylation ~70–75%
+- Slight bias at read ends
+- Overall low bias
+
+---
+
+## 5. Methylation Extraction
+
+- Output: BedGraph file with CpG methylation fractions
+
+---
+
+## 6. Visualization
+
+Tools: computeMatrix, plotProfile
+
+Key findings:
+- Methylation decreases near TSS
+- Indicates promoter hypomethylation
+
+Multi-sample trends:
+- MCF7 → highest methylation
+- Normal → lowest
+- Tumor → intermediate
+
+---
+
+## 7. DMR Detection (Metilene)
+
+- Identifies differentially methylated regions
+- Outputs statistical plots and region data
+
+---
+
+# Key Concepts
+
+| Concept | Explanation |
+|--------|------------|
+| Bisulfite Conversion | C → T |
+| CpG Islands | Promoter regions |
+| DMR | Differential methylation |
+| Bias | Read-end artifacts |
+
+---
+
+# Part 2: Epigenetic Aging Clock Benchmarking
+
+## 📊 Overview
+
+Benchmarking 8 DNA methylation aging clocks using Biolearn.
+
+---
+
+## 📁 Datasets
+
+| Dataset | Samples | CpGs | Age Range |
+|--------|--------|------|----------|
+| GSE120307 | 34 | 485K | 19–54 |
+| GSE41169 | 95 | 485K | 18–65 |
+
+---
+
+## ⏳ Aging Clocks
+
+- Horvath  
+- Hannum  
+- SkinBloodClock  
+- PhenoAge  
+- GrimAge  
+- DunedinPACE  
+- PCHorvath1  
+- PCGrimAge  
+
+---
+
 # ⚙️ Workflow
-🔹 Install Dependencies
+
+## Install Requirements
+
 pip install biolearn numpy pandas matplotlib scikit-learn scipy
-🔹 Run Analysis
-Load datasets via DataLibrary
-Load models via ModelGallery
-Generate predictions
-Perform visualization & evaluation
+
+---
+
+## Steps
+
+1. Load datasets using DataLibrary  
+2. Load models using ModelGallery  
+3. Generate predictions  
+4. Perform visualization and evaluation  
+
+---
+
 # 📊 Visualizations
-🔴 Correlation Matrix
-Strong agreement across most clocks
-DunedinPACE shows distinct behavior
-🔵 Deviation Heatmap
-🔴 Older biological age
-🔵 Younger biological age
-Detects aging outliers
-📈 Prediction Plots
-Predicted vs chronological age
-Ideal: diagonal alignment
-📏 Metrics
-Metric	Meaning
-📉 MAE	Average error
-📉 RMSE	Penalizes large errors
-📈 Pearson r	Correlation
-📊 Key Findings
 
-✔ Horvath-based clocks perform best
-✔ Strong correlation across models
-✔ Dataset-dependent variability
-✔ DunedinPACE captures different biology
+## Correlation Matrix
+- Shows agreement between clocks
+- Most clocks highly correlated
+- DunedinPACE differs
 
-▶️ How to Run
-# Clone repo
-git clone https://github.com/your-username/your-repo.git
+---
 
-# Navigate
-cd your-repo
+## Deviation Heatmap
+- Red → biologically older
+- Blue → biologically younger
 
-# Run notebook
-jupyter notebook
+---
 
-📌 First run downloads ~500MB dataset
+## Prediction Plots
+- Predicted vs chronological age
+- Ideal: diagonal line
 
-📦 Requirements
-biolearn
-numpy
-pandas
-matplotlib
-scikit-learn
-scipy
-📚 References
-Horvath (2013)
-Hannum (2013)
-Levine (2018)
-Lu (2019)
-Belsky (2022)
-Zhang (2019)
+---
 
-🔗 Biolearn: https://github.com/bio-learn/biolearn
+# 📏 Metrics
 
-🚀 Project Highlights
+| Metric | Meaning |
+|------|--------|
+| MAE | Average error |
+| RMSE | Penalizes large errors |
+| Pearson r | Correlation |
 
-✨ End-to-end epigenetics workflow
-🧬 Combines sequencing + machine learning
-📊 Strong visualization & benchmarking
-🔬 Research-grade reproducibility
+---
 
-👩‍💻 Author
+# 📊 Key Findings
 
-Amna Zulfiqar
-Bioinformatics | Data Analysis | Visualization
+- Horvath clocks perform best
+- Strong correlation across models
+- Dataset-dependent variation
+- DunedinPACE captures different biology
+
+---
+
+# 📂 Repository Structure
+
+Epigenetics-Analysis/
+│
+├── WGBS_Galaxy/
+├── Aging_Clock_Benchmark/
+├── README.md
+└── requirements.txt
+
+---
+
+# ▶️ How to Run
+
+git clone https://github.com/your-username/your-repo.git  
+cd your-repo  
+jupyter notebook  
+
+---
+
+# 📦 Requirements
+
+- biolearn  
+- numpy  
+- pandas  
+- matplotlib  
+- scikit-learn  
+- scipy  
+
+---
+
+# 📚 References
+
+- Horvath (2013)  
+- Hannum (2013)  
+- Levine (2018)  
+- Lu (2019)  
+- Belsky (2022)  
+- Zhang (2019)  
+
+Biolearn: https://github.com/bio-learn/biolearn  
+
+---
+
+# 🚀 Highlights
+
+- End-to-end epigenetics workflow  
+- Combines sequencing and machine learning  
+- Strong visualization and benchmarking  
+
+---
+
+# Author
+
+Amna Zulfiqar  
+
+
+
